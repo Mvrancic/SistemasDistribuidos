@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  location:
+    build:
+      context: .
+      dockerfile: ./location/Dockerfile
+    environment:
+      - PORT=50051
+    # gRPC interno: no publicamos puerto al host
+    networks: [appnet]
+
+  weather:
+    build:
+      context: .
+      dockerfile: ./weather/Dockerfile
+    environment:
+      - PORT=50052
+    networks: [appnet]
+
+  gateway:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    environment:
+      - PORT=3000
+    depends_on:
+      - location
+      - weather
+    ports:
+      - "3000:3000"  # ÚNICO endpoint HTTP expuesto
+    networks: [appnet]
+
+networks:
+  appnet:
+    driver: bridge
