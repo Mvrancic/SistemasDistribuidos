@@ -1,0 +1,20 @@
+syntax = "proto3";
+package weather;
+
+service WeatherService {
+  rpc GetWeather (WeatherRequest) returns (WeatherResponse);
+}
+
+message WeatherRequest {
+  double latitude = 1;
+  double longitude = 2;
+}
+
+message WeatherResponse {
+  // Datos básicos del clima actual (Open-Meteo current_weather)
+  double temperature = 1;     // °C
+  double windspeed = 2;       // km/h (según Open-Meteo)
+  double winddirection = 3;   // grados
+  int32 weathercode = 4;      // código de clima Open-Meteo
+  string time = 5;            // ISO timestamp del dato
+}

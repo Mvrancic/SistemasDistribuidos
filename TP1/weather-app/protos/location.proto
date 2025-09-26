@@ -1,0 +1,15 @@
+syntax = "proto3";
+package location;
+
+service LocationService {
+  rpc GetLocation (LocationRequest) returns (LocationResponse);
+}
+
+message LocationRequest {
+  string ip = 1; // IP v4/v6 (si viene vacío, el gateway usará la IP del request)
+}
+
+message LocationResponse {
+  double latitude = 1;
+  double longitude = 2;
+}
